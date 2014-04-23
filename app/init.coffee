@@ -2,7 +2,7 @@ express = require 'express'
 routes = require './routes'
 database = require './database'
 middleware = require './middleware'
-passport = require './passport'
+passportBookshelf = require './passport-bookshelf'
 
 module.exports = (config) ->
 
@@ -14,7 +14,7 @@ module.exports = (config) ->
 
   middleware app
 
-  passport app
+  passportBookshelf app
 
   routes app
 
