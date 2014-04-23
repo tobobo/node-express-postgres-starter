@@ -21,6 +21,7 @@
   "dependencies": {
     "pg": "~3.0.3",
     "express": "~4.0.0",
-    "bookshelf": "~0.6.10"
+    "bookshelf": "~0.6.10",
+    "rsvp": "~3.0.6"
   }
 }
