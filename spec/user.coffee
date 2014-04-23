@@ -18,6 +18,6 @@ describe 'user', ->
 
     .save().then (createdUser) ->
       new User({id: createdUser.id}).fetch().then (foundUser) ->
-        expect foundUser.id
+        expect(foundUser.id)
           .toEqual createdUser.id
         done()

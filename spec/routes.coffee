@@ -12,8 +12,8 @@ describe 'routes', ->
       get: (route, fn) ->
         if route == url
           fn req, res
-          expect res._getData().length
+          expect(res._getData().length)
             .toBeGreaterThan(0)
           done()
-          
+
     routes app
