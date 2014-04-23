@@ -6,6 +6,7 @@ module.exports = (app) ->
 
     constructor: ->
       app.db.Model.apply(this, arguments)
+
       this.on 'saving', (model, attrs, options) ->
         new RSVP.Promise (resolve, reject) ->
           resolve()

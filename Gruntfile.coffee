@@ -12,7 +12,12 @@ module.exports = (grunt) ->
             env = 'dev'
           unless cmd?
             cmd = 'up'
-          "db-migrate #{cmd} -e #{env}"
+          "node_modules/db-migrate/bin/db-migrate #{cmd} -e #{env}"
+
+      serve:
+        cmd: (env) ->
+          if !env then env = 'dev'
+          "NODE_ENV=#{env} node_modules/coffee-script/bin/coffee server.coffee"
 
     jasmine_node:
       options:
@@ -22,9 +27,19 @@ module.exports = (grunt) ->
       all: ['spec']
 
     watch:
-      all:
-        files: ['spec/**/*', 'app/**/*'],
+      options:
+        forever: false
+      test:
+        files: ['spec/**/*', 'app/**/*']
         tasks: ['test']
+        
+      serve:
+        files: ['spec/**/*', 'app/**/*', '*']
+        tasks: ['serve:dev']
+
+      dev:
+        files: ['spec/**/*',  'app/**/*', '*']
+        tasks: ['test', 'serve:dev']
 
   gruntAlias = (name, description, origName) ->
     grunt.task.registerTask name, description, ->
@@ -36,3 +51,5 @@ module.exports = (grunt) ->
   gruntAlias 'migrate', 'Migrate Database', 'exec:migrate'
 
   gruntAlias 'test', 'Test the thing', 'jasmine_node'
+
+  gruntAlias 'serve', 'Serve the site', 'exec:serve'
