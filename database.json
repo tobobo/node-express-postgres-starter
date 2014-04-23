@@ -3,8 +3,15 @@
     "driver": "pg",
     "user": "postgres_starter_dev",
     "password": "",
-    "host": "localhost",
+    "host": "localhost",  
     "database": "postgres_starter_dev"
+  },
+  "test": {
+    "driver": "pg",
+    "user": "postgres_starter_test",
+    "password": "",
+    "host": "localhost",
+    "database": "postgres_starter_test"
   },
   "prod": {"env": "POSTGRES_STARTER_DB_URL"}
 }

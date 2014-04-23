@@ -1,5 +1,6 @@
 express = require 'express'
-routes = require('./routes')
+routes = require './routes'
+database = require './database'
 
 module.exports = (config) ->
 
@@ -7,6 +8,8 @@ module.exports = (config) ->
 
   app.config = config
 
+  database app
+
   routes app
-  
+
   app
