@@ -5,5 +5,5 @@ module.exports = (app) ->
     new User(req.body.user)
     .save().then (user) ->
       req.login user, (err) ->
-        res.user = user
+        res.content = user
         next()

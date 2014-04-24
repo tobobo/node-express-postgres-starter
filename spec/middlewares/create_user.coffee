@@ -13,7 +13,6 @@ describe 'create user middleware', ->
           email: email
           password: password
 
-
     res = _http.createResponse()
 
     req.login = (user, cb) ->
@@ -21,6 +20,6 @@ describe 'create user middleware', ->
       cb()
 
     createUser req, res, ->
-      expect(res.user.get('email')).toEqual(email)
+      expect(res.content.get('email')).toEqual(email)
 
       done()
