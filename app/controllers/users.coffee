@@ -1,9 +1,15 @@
 module.exports = (app) ->
-  User = require('../models/user') app
+  createUser = require('../middlewares/create_user') app
 
-  app.post '/users', (req, res) ->
-    new User(req.body.user)
-    .save().then (user) ->
-      req.login user, (err) ->
-        res.send 
-          user: user.toJSON()
+  render = (req, res) ->
+    responseObj =
+      meta: res.meta
+    if res.user.length?
+      responseObj.users = res.user.map (user) -> user.toJSON()
+    else
+      responseObj.user = res.user
+      
+    res.send responseObj
+
+
+  app.post '/users', createUser, render

@@ -46,3 +46,25 @@ describe 'user', ->
       .then (isMatch) ->
         expect(isMatch).toBe(false)
         done()
+
+    password = 'gibblies'
+    user = new User
+      email: 'wutz',
+      password: password
+
+    hashed = null
+
+    it 'hashes a password automatically on save', (done) ->
+      user.save().then (user) ->
+        hashed = user.get('password')
+        expect(user.get('password'))
+          .not.toEqual password
+        done()
+
+    it 'does not hash a password if the password was not changed', (done) ->
+      user.set 'email', 'somethingelse@what.com'
+      user.save().then (user) ->
+        expect(user.get('password'))
+          .toEqual hashed
+        done()
+
