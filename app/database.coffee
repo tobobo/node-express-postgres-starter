@@ -4,7 +4,7 @@ module.exports = (app) ->
   app.db = Bookshelf.initialize
     client: 'pg'
     connection:
-      host: app.config.db.host
-      user: app.config.db.user
-      password: app.config.db.password
-      database: app.config.db.database
+      host: app.config.db[app.config.env].host
+      user: app.config.db[app.config.env].user
+      password: app.config.db[app.config.env].password
+      database: app.config.db[app.config.env].database

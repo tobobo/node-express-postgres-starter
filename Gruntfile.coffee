@@ -4,13 +4,17 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-pg'
 
-  dbConfig = require './database'
+  config = require('./config')()
 
   grunt.initConfig
     exec:
       createdb:
         cmd: (env) ->
-          "createdb #{dbConfig[env].database} -O #{dbConfig[env].user} -h #{dbConfig[env].host} -U #{dbConfig[env].user} || echo 'Database #{dbConfig[env].database} already exists.'"
+          "createdb #{config.db[env].database}
+            -O #{config.db[env].user} 
+            -h #{config.db[env].host} 
+            -U #{config.db[env].user} 
+          || echo 'Database #{config.db[env].database} already exists.'"
 
       dropdb:
         cmd: (env) ->
@@ -18,7 +22,10 @@ module.exports = (grunt) ->
             console.log 'Cannot drop production database.'
             "exit 1"
           else
-            "dropdb #{dbConfig[env].database} -h #{dbConfig[env].host} -U #{dbConfig[env].user} || echo 'Database #{dbConfig[env].database} does not exist.'"
+            "dropdb #{config.db[env].database} 
+              -h #{config.db[env].host} 
+              -U #{config.db[env].user} 
+            || echo 'Database #{config.db[env].database} does not exist.'"
 
       migrate:
         cmd: (env, cmd) ->
@@ -57,20 +64,27 @@ module.exports = (grunt) ->
     grunt.task.registerTask name, description, ->
       args = Array.prototype.slice.call(arguments)
       task = origName
-      if args.length > 0 then task += ":" + args.join(':')
-      grunt.task.run task
+      suffix = if args.length > 0 then ":" + args.join(':') else ""
+      if typeof origName == 'object'
+        for task in origName
+          grunt.task.run (task + suffix)
+      else
+        grunt.task.run (task + suffix)
 
-  gruntAlias 'db:migrate', 'Migrate Database', 'exec:migrate'
+  grunt.registerTask 'db:config', 'Write database configuration', ->
+    dbConfigStr = JSON.stringify config.db, null, '  '
+    grunt.file.write('./database.json', dbConfigStr + '\n')
 
   gruntAlias 'db:drop', 'Drop database', 'exec:dropdb'
 
   gruntAlias 'db:create', 'Create database', 'exec:createdb'
 
-  grunt.registerTask 'db:reset', 'Reset database', (env) ->
-    grunt.task.run "db:drop:#{env}"
-    grunt.task.run "db:create:#{env}"
-    grunt.task.run "db:migrate:#{env}"
+  gruntAlias 'db:migrate', 'Migrate Database', ['db:config', 'exec:migrate']
+
+  gruntAlias 'db:reset', 'Reset database', ['db:drop', 'db:create', 'db:migrate']
 
   gruntAlias 'test', 'Test the thing', 'jasmine_node'
+
+  gruntAlias 'test:reset', 'Reset the test database and test', ['db:reset:test', 'test']
 
   gruntAlias 'serve', 'Serve the site', 'exec:serve'
