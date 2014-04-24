@@ -15,7 +15,7 @@ module.exports = (grunt) ->
       dropdb:
         cmd: (env) ->
           if env == 'prod'
-            console.log 'Cannot migrate production database.'
+            console.log 'Cannot drop production database.'
             "exit 1"
           else
             "dropdb #{dbConfig[env].database} -h #{dbConfig[env].host} -U #{dbConfig[env].user} || echo 'Database #{dbConfig[env].database} does not exist.'"
