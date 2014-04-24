@@ -63,13 +63,12 @@ module.exports = (grunt) ->
   gruntAlias = (name, description, origName) ->
     grunt.task.registerTask name, description, ->
       args = Array.prototype.slice.call(arguments)
-      task = origName
       suffix = if args.length > 0 then ":" + args.join(':') else ""
       if typeof origName == 'object'
         for task in origName
           grunt.task.run (task + suffix)
       else
-        grunt.task.run (task + suffix)
+        grunt.task.run (origName + suffix)
 
   grunt.registerTask 'db:config', 'Write database configuration', ->
     dbConfigStr = JSON.stringify config.db, null, '  '
