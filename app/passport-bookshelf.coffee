@@ -8,7 +8,12 @@ module.exports = (app) ->
     done null, user.id
 
   passport.deserializeUser (id, done) ->
-    id: id
+    new User
+      id: id
+    .fetch().then (user) ->
+      done null, user
+    , (error) ->
+      done error
 
   passport.use new LocalStrategy
     usernameField: 'email'
@@ -33,3 +38,4 @@ module.exports = (app) ->
 
 
   app.use passport.initialize()
+  app.use passport.session()

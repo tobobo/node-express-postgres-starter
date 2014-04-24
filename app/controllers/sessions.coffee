@@ -3,4 +3,5 @@ module.exports = (app) ->
 
   app.post '/sessions', passport.authenticate('local'), (req, res) ->
     res.send 
-      user: req.user.toJSON()
+      session:
+        user: req.user.toJSON()
