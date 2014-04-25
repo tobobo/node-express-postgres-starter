@@ -1,3 +1,5 @@
+moment = require 'moment'
+
 module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-exec'
   grunt.loadNpmTasks 'grunt-jasmine-node'
@@ -10,6 +12,8 @@ module.exports = (grunt) ->
     exec:
       createdb:
         cmd: (env) ->
+          unless env?
+            env = 'dev'
           "createdb #{config.db[env].database}
             -O #{config.db[env].user} 
             -h #{config.db[env].host} 
@@ -18,6 +22,8 @@ module.exports = (grunt) ->
 
       dropdb:
         cmd: (env) ->
+          unless env?
+            env = 'dev'
           if env == 'prod'
             console.log 'Cannot drop production database.'
             "exit 1"
@@ -31,13 +37,17 @@ module.exports = (grunt) ->
         cmd: (env, cmd) ->
           dir = './app/migrations'
           if env == 'create'
-            "node_modules/db-migrate/bin/db-migrate #{env} #{cmd} -m #{dir};
-            FILE=$(basename $(ls app/migrations/*.js));
-            MIGR=\"${FILE%.*}\"; 
-            js2coffee #{dir}/$MIGR.js > #{dir}/$MIGR.coffee; 
-            rm #{dir}/$MIGR.js;
-            echo \"[INFO] Recreated it as $MIGR.coffee cause we're cool like that\";"
+            if cmd?
+              fileName = "#{moment.utc().format('YYYYMMDDhhmmss')}-#{cmd.replace('_','-')}.coffee"
+              grunt.file.write "app/migrations/#{fileName}",
+                "dbm = require 'db-migrate'\ntype = dbm.dataType\n\nexports.up = (db, callback) ->\n\n  callback()\n\nexports.down = (db, callback) ->\n\n  callback()\n\n"
+              "exit 0"
+            else
+              console.log 'Cannot create a migration without a name'
+              "exit 1"
           else
+            unless env?
+              env = 'dev'
             unless cmd?
               cmd = 'up'
             "node_modules/db-migrate/bin/db-migrate #{cmd} -e #{env} -m #{dir}"
@@ -63,7 +73,7 @@ module.exports = (grunt) ->
         forever: false
       test:
         files: ['spec/**/*', 'app/**/*']
-        tasks: ['test:all']
+        tasks: ['test']
         
       serve:
         files: ['spec/**/*', 'app/**/*', '*']
@@ -71,12 +81,18 @@ module.exports = (grunt) ->
 
       dev:
         files: ['spec/**/*',  'app/**/*', '*']
-        tasks: ['test:all', 'serve:dev']
+        tasks: ['test', 'serve:dev']
 
-  gruntAlias = (name, description, origName) ->
+  gruntAlias = (name, description, origName, defaultSuffix) ->
     grunt.task.registerTask name, description, ->
       args = Array.prototype.slice.call(arguments)
-      suffix = if args.length > 0 then ":" + args.join(':') else ""
+
+      suffix = if args.length > 0 
+        ":" + args.join(':')
+      else if defaultSuffix?
+        ":#{defaultSuffix}"
+      else ""
+
       if typeof origName == 'object'
         for task in origName
           grunt.task.run (task + suffix)
@@ -96,8 +112,8 @@ module.exports = (grunt) ->
 
   gruntAlias 'db:reset', 'Reset database', ['db:drop', 'db:create', 'db:migrate']
 
-  gruntAlias 'test', 'Test the thing', 'jasmine_node'
+  gruntAlias 'test', 'Test the thing', 'jasmine_node', 'all'
 
-  gruntAlias 'test:reset', 'Reset the test database and test', ['db:reset:test', 'test:all']
+  gruntAlias 'test:reset', 'Reset the test database and test', ['db:reset:test', 'test']
 
   gruntAlias 'serve', 'Serve the site', 'exec:serve'
