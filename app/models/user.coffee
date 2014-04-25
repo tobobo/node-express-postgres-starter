@@ -29,5 +29,5 @@ module.exports = (app) ->
       app.db.Model.apply(@, arguments)
 
       @on 'saving', (model, attrs, options) ->
-        @hashPassword()
+        model.hashPassword()
 
