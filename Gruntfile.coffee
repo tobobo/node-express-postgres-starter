@@ -29,9 +29,13 @@ module.exports = (grunt) ->
 
       migrate:
         cmd: (env, cmd) ->
-          unless cmd?
-            cmd = 'up'
-          "node_modules/db-migrate/bin/db-migrate #{cmd} -e #{env}"
+          dir = './app/migrations'
+          if env == 'create'
+            "node_modules/db-migrate/bin/db-migrate #{env} #{cmd} -m #{dir}"
+          else
+            unless cmd?
+              cmd = 'up'
+            "node_modules/db-migrate/bin/db-migrate #{cmd} -e #{env} -m #{dir}"
 
       serve:
         cmd: (env) ->
@@ -44,6 +48,9 @@ module.exports = (grunt) ->
         extensions: 'coffee'
         coffee: true
       all: ['spec']
+      controllers: ['spec/controllers']
+      models: ['spec/models']
+      middlewares: ['spec/middlewares']
 
     watch:
       options:
