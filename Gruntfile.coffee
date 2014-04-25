@@ -31,7 +31,12 @@ module.exports = (grunt) ->
         cmd: (env, cmd) ->
           dir = './app/migrations'
           if env == 'create'
-            "node_modules/db-migrate/bin/db-migrate #{env} #{cmd} -m #{dir}"
+            "node_modules/db-migrate/bin/db-migrate #{env} #{cmd} -m #{dir};
+            FILE=$(basename $(ls app/migrations/*.js));
+            MIGR=\"${FILE%.*}\"; 
+            js2coffee #{dir}/$MIGR.js > #{dir}/$MIGR.coffee; 
+            rm #{dir}/$MIGR.js;
+            echo \"[INFO] Recreated it as $MIGR.coffee cause we're cool like that\";"
           else
             unless cmd?
               cmd = 'up'

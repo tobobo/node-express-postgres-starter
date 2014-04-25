@@ -13,7 +13,6 @@ exports.up = (db, callback) ->
     password:
       type: "string"
       notNull: true
-    salt: "string"
   , callback
 
 exports.down = (db, callback) ->

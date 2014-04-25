@@ -20,4 +20,4 @@ module.exports = (env) ->
       host: "localhost",
       database: "#{appName}_test"
     prod:
-      env: "#{appName.toUpperCase()}_DB_URL"
+      ENV: "#{appName.toUpperCase()}_DB_URL"
