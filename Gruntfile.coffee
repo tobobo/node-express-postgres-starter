@@ -50,6 +50,8 @@ module.exports = (grunt) ->
       controllers: ['spec/controllers']
       models: ['spec/models']
       middlewares: ['spec/middlewares']
+      strategies: ['spec/strategies']
+      initializers: ['spec/initializers']
 
     watch:
       options:
