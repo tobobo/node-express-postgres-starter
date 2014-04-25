@@ -1,7 +1,7 @@
 module.exports = (app) ->
   passport = require 'passport'
   LocalStrategy = require('passport-local').Strategy
-  User = require('./models/user') app
+  User = require('../models/user') app
   RSVP = require 'rsvp'
 
   passport.serializeUser (user, done) ->
@@ -37,5 +37,3 @@ module.exports = (app) ->
         message: 'Invalid password'
 
 
-  app.use passport.initialize()
-  app.use passport.session()

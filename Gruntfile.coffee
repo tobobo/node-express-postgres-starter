@@ -44,7 +44,6 @@ module.exports = (grunt) ->
 
     jasmine_node:
       options:
-        matchall: true
         extensions: 'coffee'
         coffee: true
       all: ['spec']
@@ -57,7 +56,7 @@ module.exports = (grunt) ->
         forever: false
       test:
         files: ['spec/**/*', 'app/**/*']
-        tasks: ['test']
+        tasks: ['test:all']
         
       serve:
         files: ['spec/**/*', 'app/**/*', '*']
@@ -65,7 +64,7 @@ module.exports = (grunt) ->
 
       dev:
         files: ['spec/**/*',  'app/**/*', '*']
-        tasks: ['test', 'serve:dev']
+        tasks: ['test:all', 'serve:dev']
 
   gruntAlias = (name, description, origName) ->
     grunt.task.registerTask name, description, ->
@@ -92,6 +91,6 @@ module.exports = (grunt) ->
 
   gruntAlias 'test', 'Test the thing', 'jasmine_node'
 
-  gruntAlias 'test:reset', 'Reset the test database and test', ['db:reset:test', 'test']
+  gruntAlias 'test:reset', 'Reset the test database and test', ['db:reset:test', 'test:all']
 
   gruntAlias 'serve', 'Serve the site', 'exec:serve'

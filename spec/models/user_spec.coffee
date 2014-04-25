@@ -1,7 +1,5 @@
-app = 
-  config: require('../../config') 'test'
-
-require('../../app/database') app
+config =require('../../config') 'test'
+app = require('../../app/app') config
 User = require('../../app/models/user') app
 
 describe 'user', ->

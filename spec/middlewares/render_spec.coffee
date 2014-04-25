@@ -1,7 +1,7 @@
 config = require('../../config') 'test'
-app = require('../../app/init') config
-render = require('../../app/middlewares/render.coffee') app
-User = require('../../app/models/user.coffee') app
+app = require('../../app/app') config
+render = require('../../app/middlewares/render') app
+User = require('../../app/models/user') app
 
 describe 'render middleware', ->
 

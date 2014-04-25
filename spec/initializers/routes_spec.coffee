@@ -1,5 +1,5 @@
-config = require('../config.coffee') 'test'
-app = require('../app/init.coffee') config
+config = require('../../config') 'test'
+app = require('../../app/app') config
 request = require 'supertest'
 
 describe 'routes', ->
