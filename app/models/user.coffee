@@ -26,8 +26,8 @@ module.exports = (app) ->
           else resolve isMatch
 
     constructor: ->
-      app.db.Model.apply(this, arguments)
+      app.db.Model.apply(@, arguments)
 
-      this.on 'saving', (model, attrs, options) ->
+      @on 'saving', (model, attrs, options) ->
         @hashPassword()
 
