@@ -17,6 +17,7 @@ describe 'create user middleware', ->
 
     req.login = (user, cb) ->
       expect(user.get('email')).toEqual(email)
+      expect(user.get('id')?).toBe(true)
       cb()
 
     createUser req, res, ->

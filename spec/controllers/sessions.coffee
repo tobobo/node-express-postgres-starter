@@ -13,8 +13,9 @@ describe 'sessions controller', ->
       request(app)
       .post('/sessions')
       .send
-        email: createdUser.get('email')
-        password: password
+        user:
+          email: createdUser.get('email')
+          password: password
       .expect('set-cookie', /.*/)
       .expect(200, done)
 
