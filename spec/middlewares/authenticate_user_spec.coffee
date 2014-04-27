@@ -14,7 +14,7 @@ describe 'authenticate user middleware', ->
       req = _http.createRequest
         method: 'POST'
         body:
-          user:
+          session:
             email: createdUser.get('email')
             password: password
 
@@ -37,7 +37,7 @@ describe 'authenticate user middleware', ->
       req = _http.createRequest
         method: 'POST'
         body:
-          user:
+          session:
             email: createdUser.get('email')
             password: password + "dslkfjlkdsfdkjl"
 

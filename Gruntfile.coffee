@@ -25,7 +25,7 @@ module.exports = (grunt) ->
           unless env?
             env = 'dev'
           if env == 'prod'
-            console.log 'Cannot drop production database.'
+            grunt.log.error 'Cannot drop production database.'
             "exit 1"
           else
             "dropdb #{config.db[env].database} 
@@ -43,7 +43,7 @@ module.exports = (grunt) ->
                 "dbm = require 'db-migrate'\ntype = dbm.dataType\n\nexports.up = (db, callback) ->\n\n  callback()\n\nexports.down = (db, callback) ->\n\n  callback()\n\n"
               "exit 0"
             else
-              console.log 'Cannot create a migration without a name'
+              grunt.log.error 'Cannot create a migration without a name'
               "exit 1"
           else
             unless env?

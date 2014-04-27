@@ -13,7 +13,7 @@ describe 'sessions controller', ->
       request(app)
       .post('/sessions')
       .send
-        user:
+        session:
           email: createdUser.get('email')
           password: password
       .expect('set-cookie', /.*/)
