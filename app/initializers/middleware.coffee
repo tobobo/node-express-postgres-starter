@@ -10,6 +10,8 @@ module.exports = (app) ->
   PgSession = require('connect-pg-simple') fauxConnect
 
   app.use cookieParser()
+  app.use bodyParser()
+  app.use methodOverride()
 
   app.use expressSession
     secret: app.config.session_key
@@ -19,14 +21,14 @@ module.exports = (app) ->
     store: new PgSession
       conString: ((dbC) -> [
         "postgres://",
-        "#{dbC.user}",
-        "#{if dbC.password? then ":" + dbC.password else ""}",
-        "@#{dbC.host}",
-        "#{if dbC.port? then ":" + dbC.port else ""}",
-        "/#{dbC.database}"
+        dbC.user,
+        if dbC.password? then ":" + dbC.password,
+        "@",
+        dbC.host,
+        if dbC.port? then ":" + dbC.port,
+        "/",
+        dbC.database
       ].join '') app.db.knex.client.connectionSettings
-  app.use bodyParser()
-  app.use methodOverride()
 
   passportBookshelf app
 
