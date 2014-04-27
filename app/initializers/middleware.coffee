@@ -11,7 +11,7 @@ module.exports = (app) ->
 
   app.use cookieParser()
 
-  app.use fauxConnect.session
+  app.use expressSession
     secret: app.config.session_key
     key: app.config.session_secret
     cookie:

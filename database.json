@@ -2,14 +2,12 @@
   "dev": {
     "driver": "pg",
     "user": "postgres_starter_dev",
-    "password": "",
     "host": "localhost",
     "database": "postgres_starter_dev"
   },
   "test": {
     "driver": "pg",
     "user": "postgres_starter_test",
-    "password": "",
     "host": "localhost",
     "database": "postgres_starter_test"
   },
