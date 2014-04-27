@@ -17,5 +17,4 @@ module.exports = (env) ->
       user: "#{appName}_test",
       host: "localhost",
       database: "#{appName}_test"
-    prod:
-      ENV: "#{appName.toUpperCase()}_DB_URL"
+    prod: process.env["#{appName.toUpperCase()}_DB_URL"]
