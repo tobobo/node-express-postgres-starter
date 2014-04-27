@@ -5,7 +5,7 @@ User = require('../../app/models/user') app
 
 describe 'render middleware', ->
 
-  it 'renders an object', (done) ->
+  it 'should render an object', (done) ->
     _http = require 'express-mocks-http'
     req = _http.createRequest()
     res = _http.createResponse()
@@ -22,7 +22,7 @@ describe 'render middleware', ->
 
     render(key) req, res
 
-  it 'renders a model', (done) ->
+  it 'should render a model', (done) ->
     _http = require 'express-mocks-http'
     req = _http.createRequest()
     res = _http.createResponse()
@@ -40,7 +40,7 @@ describe 'render middleware', ->
 
     render(key) req, res
 
-  it 'renders many objects', (done) ->
+  it 'should render many objects', (done) ->
     _http = require 'express-mocks-http'
     req = _http.createRequest()
     res = _http.createResponse()
@@ -63,7 +63,7 @@ describe 'render middleware', ->
 
     render(key) req, res
 
-  it 'renders many models', (done) ->
+  it 'should render many models', (done) ->
     _http = require 'express-mocks-http'
     req = _http.createRequest()
     res = _http.createResponse()
@@ -87,3 +87,34 @@ describe 'render middleware', ->
       done()
 
     render(key) req, res
+
+  it 'should render nothing', (done) ->
+    _http = require 'express-mocks-http'
+    req = _http.createRequest()
+    res = _http.createResponse()
+
+    key = 'users'
+
+    res.send = (object) ->
+      expect('meta' of object).toBe(true)
+      expect(key of object).toBe(true)
+      done()
+
+    render(key) req, res
+
+  it 'should render meta', (done) ->
+    _http = require 'express-mocks-http'
+    req = _http.createRequest()
+    res = _http.createResponse()
+
+    res.meta = "some meta"
+
+    key = 'users'
+
+    res.send = (object) ->
+      expect('meta' of object).toBe(true)
+      expect(object.meta).toEqual(res.meta)
+      done()
+
+    render(key) req, res
+
