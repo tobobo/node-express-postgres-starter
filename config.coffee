@@ -10,13 +10,11 @@ module.exports = (env) ->
     dev:
       driver: "pg",
       user: "#{appName}_dev",
-      password: "",
       host: "localhost",  
       database: "#{appName}_dev"
     test:
       driver: "pg",
       user: "#{appName}_test",
-      password: "",
       host: "localhost",
       database: "#{appName}_test"
     prod:

@@ -4,12 +4,12 @@ module.exports = (app) ->
       responseObj =
         meta: res.meta 
       procObj = (obj) ->
-        if obj.toJSON?
+        if obj? and obj.toJSON?
           obj.toJSON()
         else
           obj
 
-      if res.content.length?
+      if res.content? and res.content.length?
         responseObj[objKey] = res.content.map procObj
       else
         responseObj[objKey] = procObj res.content

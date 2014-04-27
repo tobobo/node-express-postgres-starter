@@ -4,4 +4,6 @@ module.exports = (app) ->
       res.content = [
         user: req.user
       ]
+    else
+      res.meta = "No current user"
     next()

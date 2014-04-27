@@ -10,13 +10,21 @@ module.exports = (app) ->
   PgSession = require('connect-pg-simple') fauxConnect
 
   app.use cookieParser()
+
   app.use fauxConnect.session
     secret: app.config.session_key
     key: app.config.session_secret
     cookie:
       maxAge: 30*24*60*60*1000
     store: new PgSession
-      conString: 'postgres://postgres_starter_test@localhost/postgres_starter_test'
+      conString: ((dbC) -> [
+        "postgres://",
+        "#{dbC.user}",
+        "#{if dbC.password? then ":" + dbC.password else ""}",
+        "@#{dbC.host}",
+        "#{if dbC.port? then ":" + dbC.port else ""}",
+        "/#{dbC.database}"
+      ].join '') app.db.knex.client.connectionSettings
   app.use bodyParser()
   app.use methodOverride()
 
