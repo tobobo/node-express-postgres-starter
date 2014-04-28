@@ -1,5 +1,3 @@
-moment = require 'moment'
-
 module.exports = (grunt) ->
   loadGruntConfig = require('./tasks/utils/load_config') grunt
   loadGruntConfig './tasks/options/', 

@@ -1,3 +1,5 @@
+moment = require 'moment'
+
 module.exports = (grunt) ->
   createdb:
     cmd: (env) ->
