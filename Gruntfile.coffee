@@ -1,7 +1,7 @@
 module.exports = (grunt) ->
   loadGruntConfig = require('./tasks/utils/load_config') grunt
   loadGruntConfig './tasks/options/', 
-    appConfig: require('./config')()
+    appConfig: require('./config')
     dbConfigPath: 'tmp/database.json'
 
   require('load-grunt-tasks') grunt

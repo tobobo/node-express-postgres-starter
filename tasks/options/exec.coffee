@@ -5,11 +5,12 @@ module.exports = (grunt) ->
     cmd: (env) ->
       unless env?
         env = 'dev'
-      "createdb #{grunt.config('appConfig').db[env].database}
-        -O #{grunt.config('appConfig').db[env].user} 
-        -h #{grunt.config('appConfig').db[env].host} 
-        -U #{grunt.config('appConfig').db[env].user} 
-      || echo 'Database #{grunt.config('appConfig').db[env].database} already exists.'"
+      dbConfig = grunt.config('appConfig')(env).db
+      "createdb #{dbConfig.database}
+        -O #{dbConfig.user} 
+        -h #{dbConfig.host} 
+        -U #{dbConfig.user} 
+      || echo 'Database #{dbConfig.database} already exists.'"
 
   dropdb:
     cmd: (env) ->
@@ -19,10 +20,11 @@ module.exports = (grunt) ->
         grunt.log.error 'Cannot drop production database.'
         "exit 1"
       else
-        "dropdb #{grunt.config('appConfig').db[env].database} 
-          -h #{grunt.config('appConfig').db[env].host} 
-          -U #{grunt.config('appConfig').db[env].user} 
-        || echo 'Database #{grunt.config('appConfig').db[env].database} does not exist.'"
+        dbConfig = grunt.config('appConfig')(env).db
+        "dropdb #{dbConfig.database} 
+          -h #{dbConfig.host} 
+          -U #{dbConfig.user} 
+        || echo 'Database #{dbConfig.database} does not exist.'"
 
   migrate:
     cmd: (env, cmd) ->

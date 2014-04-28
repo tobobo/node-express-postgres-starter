@@ -2,7 +2,7 @@ Bookshelf = require 'bookshelf'
 parseUrl = require 'parse-database-url'
 
 module.exports = (app) ->
-  dbConfig = app.config.db[app.config.env]
+  dbConfig = app.config.db
 
   connection = if dbConfig.host?
     result = {}
