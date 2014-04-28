@@ -40,8 +40,9 @@ module.exports = (grunt) ->
         cmd: (env, cmd) ->
           dir = './app/migrations'
           if env == 'create'
-            if cmd?
-              fileName = "#{moment.utc().format('YYYYMMDDhhmmss')}-#{cmd.replace('_','-')}.coffee"
+            name = cmd
+            if name?
+              fileName = "#{moment.utc().format('YYYYMMDDhhmmss')}-#{name.replace('_','-')}.coffee"
               grunt.file.write "app/migrations/#{fileName}",
                 "dbm = require 'db-migrate'\ntype = dbm.dataType\n\nexports.up = (db, callback) ->\n\n  callback()\n\nexports.down = (db, callback) ->\n\n  callback()\n\n"
               "exit 0"

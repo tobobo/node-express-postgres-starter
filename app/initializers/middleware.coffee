@@ -5,9 +5,8 @@ module.exports = (app) ->
   methodOverride = require 'method-override'
   passportBookshelf = require '../strategies/passport_bookshelf'
   expressSession = require 'express-session'
-  fauxConnect =
+  PgSession = require('connect-pg-simple')
     session: expressSession
-  PgSession = require('connect-pg-simple') fauxConnect
 
   app.use cookieParser()
   app.use bodyParser()
