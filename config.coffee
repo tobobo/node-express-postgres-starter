@@ -1,13 +1,19 @@
 module.exports = (env) ->
   appName = 'postgres_starter'
+  port = process.env.PORT or 8888
 
   env: env
   appName: appName
-  port: Number(process.env.PORT or 8888)
+  port: port
   salt_work_factor: 10
   sessionKey: "#{appName}_session"
   sessionSecret: process.env["#{appName.toUpperCase()}_SESSION_SECRET"] or 'keyboard cat'
-  server
+  url: (->
+    if env == 'prod'
+      "http://#{appName}_server.herokuapp.com"
+    else
+      "http://localhost:#{port}/"
+  )()
   db: 
     dev:
       driver: "pg",

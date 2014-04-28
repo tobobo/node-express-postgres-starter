@@ -1,0 +1,10 @@
+#!/usr/bin/env coffee
+
+request = require 'request'
+config = require('../config')(process.env.NODE_ENV)
+
+request.get config.url, (error, response, body) ->
+  if error
+    console.log "error pinging #{config.appName}"
+  else
+    console.log "ping to #{config.appName} successful"
