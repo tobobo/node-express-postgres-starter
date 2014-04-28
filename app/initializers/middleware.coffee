@@ -13,8 +13,8 @@ module.exports = (app) ->
   app.use methodOverride()
 
   app.use expressSession
-    secret: app.config.session_key
-    key: app.config.session_secret
+    secret: app.config.sessionKey
+    key: app.config.sessionSecret
     cookie:
       maxAge: 30*24*60*60*1000
     store: new PgSession

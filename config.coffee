@@ -2,10 +2,12 @@ module.exports = (env) ->
   appName = 'postgres_starter'
 
   env: env
+  appName: appName
   port: Number(process.env.PORT or 8888)
   salt_work_factor: 10
-  session_key: "#{appName}_session"
-  session_secret: process.env["#{appName.toUpperCase()}_SESSION_SECRET"] or 'keyboard cat'
+  sessionKey: "#{appName}_session"
+  sessionSecret: process.env["#{appName.toUpperCase()}_SESSION_SECRET"] or 'keyboard cat'
+  server
   db: 
     dev:
       driver: "pg",
