@@ -1,14 +1,15 @@
 module.exports =
   options:
-    forever: false
+    interrupt: true
+
   test:
     files: ['spec/**/*', 'app/**/*']
     tasks: ['test']
     
   serve:
-    files: ['spec/**/*', 'app/**/*', '*']
-    tasks: ['serve:dev']
+    files: ['app/**/*', '*']
+    tasks: ['serve']
 
   dev:
     files: ['spec/**/*',  'app/**/*', '*']
-    tasks: ['test', 'serve:dev']
+    tasks: ['test', 'serve']

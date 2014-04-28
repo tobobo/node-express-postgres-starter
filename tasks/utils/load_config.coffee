@@ -2,6 +2,8 @@ module.exports = (grunt) ->
   (configPath, config) ->
     glob = require("glob")
     path = require("path")
+    grunt.initConfig config
+    
     object = {}
     glob.sync("*",
       cwd: configPath

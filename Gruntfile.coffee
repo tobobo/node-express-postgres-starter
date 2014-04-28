@@ -21,4 +21,8 @@ module.exports = (grunt) ->
 
   gruntAlias 'test:reset', 'Reset the test database and test', ['db:reset:test', 'test']
 
-  gruntAlias 'serve', 'Serve the site', 'exec:serve'
+  gruntAlias 'serve', 'Serve the site', 'express', 'dev'
+
+  gruntAlias 'test:watch', 'Test and watch', 'watch:test'
+
+  gruntAlias 'dev', 'Game time.', ['watch:dev']

@@ -26,13 +26,14 @@ module.exports = (grunt) ->
 
   migrate:
     cmd: (env, cmd) ->
-      dir = './app/migrations'
+      dir = './app/migrations/'
       if env == 'create'
         name = cmd
         if name?
           fileName = "#{moment.utc().format('YYYYMMDDhhmmss')}-#{name.replace('_','-')}.coffee"
-          grunt.file.write "app/migrations/#{fileName}",
+          grunt.file.write "#{dir}#{fileName}",
             "dbm = require 'db-migrate'\ntype = dbm.dataType\n\nexports.up = (db, callback) ->\n\n  callback()\n\nexports.down = (db, callback) ->\n\n  callback()\n\n"
+          grunt.log.writeln "Created migration #{fileName}"
           "exit 0"
         else
           grunt.log.error 'Cannot create a migration without a name'
@@ -43,8 +44,3 @@ module.exports = (grunt) ->
         unless cmd?
           cmd = 'up'
         "node_modules/db-migrate/bin/db-migrate #{cmd} -e #{env} -m #{dir} --config \"#{grunt.config('dbConfigPath')}\"|| echo 'Migration failed.'"
-
-  serve:
-    cmd: (env) ->
-      if !env then env = 'dev'
-      "NODE_ENV=#{env} node_modules/coffee-script/bin/coffee server.coffee"
