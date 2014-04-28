@@ -108,7 +108,7 @@ module.exports = (grunt) ->
     else
       dbConfigStr = JSON.stringify config.db
       grunt.file.mkdir path.dirname(dbConfigPath)
-      grunt.file.write(dbConfigPath, dbConfigStr + '\n')
+      grunt.file.write dbConfigPath, dbConfigStr
 
   gruntAlias 'db:drop', 'Drop database', 'exec:dropdb'
 
