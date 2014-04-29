@@ -4,3 +4,4 @@ module.exports = (config) ->
     user: "#{config.appName}_test",
     host: "localhost",
     database: "#{config.appName}_test"
+  cookieDomain: ''
