@@ -3,7 +3,7 @@ module.exports =
     interrupt: true
 
   test:
-    files: ['spec/**/*', 'app/**/*']
+    files: ['spec/**/*', 'app/**/*', '*']
     tasks: ['test']
     
   serve:

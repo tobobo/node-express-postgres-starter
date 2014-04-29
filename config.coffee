@@ -11,7 +11,7 @@ module.exports = (env) ->
     sessionSecret: process.env["#{appName.toUpperCase()}_SESSION_SECRET"] or 'keyboard cat'
     url: "http://localhost:#{port}"
     clients: ["http://localhost:4200"]
-    cookieDomain: 'localhost'
+    cookieDomain: ''
     db: 
       driver: "pg",
       user: "#{appName}_dev",
