@@ -4,6 +4,7 @@ module.exports = (app) ->
   bodyParser = require 'body-parser'
   methodOverride = require 'method-override'
   passportBookshelf = require '../strategies/passport_bookshelf'
+  passportFacebook = require '../strategies/passport_facebook'
   expressSession = require 'express-session'
   PgSession = require('connect-pg-simple')
     session: expressSession
@@ -44,6 +45,7 @@ module.exports = (app) ->
       ].join '') app.db.knex.client.connectionSettings
 
   passportBookshelf app
+  passportFacebook app
 
   app.use passport.initialize()
   app.use passport.session()
