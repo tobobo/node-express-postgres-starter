@@ -4,6 +4,5 @@ module.exports = (app) ->
   app.get '/', (req, res) ->
     res.send 'hello, world'
 
-  require('../routes/sessions') app
   require('../routes/authentications') app
   require('../routes/users') app

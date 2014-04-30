@@ -1,17 +1,13 @@
 module.exports = (app) ->
-  passport = require 'passport'
-  url = require 'url'
+  authenticateUser = require('../middlewares/authenticate_user') app
+  authenticateService = require('../middlewares/authenticate_service') app
+  getCurrentUser = require('../middlewares/get_current_user') app
+  logOut = require('../middlewares/log_out') app
+  render = require('../middlewares/render') app
 
-  app.get '/auth/facebook', (req, res) ->
-    req.session.authCallbackURL = req.query.callback
-    passport.authenticate('facebook') req, res
+  app.post '/auth', authenticateUser, render('session')
+  app.get '/auth', getCurrentUser, render('sessions')
+  app.delete '/auth', logOut, render('session')
 
-  app.get '/auth/facebook/callback', passport.authenticate('facebook'), (req, res) ->
-    if req.session.authCallbackURL?
-      cbURL = req.session.authCallbackURL
-      delete req.session.authCallbackURL
-      parsed = url.parse cbURL
-      if !parsed.query then parsed.query = {}
-      parsed.query.user = JSON.stringify req.user
-      res.redirect url.format(parsed)
-    res.end()
+  app.get '/auth/facebook', authenticateService('facebook').auth
+  app.get '/auth/facebook/callback', authenticateService('facebook').callback

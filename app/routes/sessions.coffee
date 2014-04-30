@@ -5,6 +5,6 @@ module.exports = (app) ->
   logOut = require('../middlewares/log_out') app
   render = require('../middlewares/render') app
 
-  app.post '/sessions', authenticateUser, render('session')
-  app.get '/sessions', getCurrentUser, render('sessions')
-  app.delete '/sessions', logOut, render('session')
+  app.post '/auth', authenticateUser, render('session')
+  app.get '/auth', getCurrentUser, render('sessions')
+  app.delete '/auth', logOut, render('session')
