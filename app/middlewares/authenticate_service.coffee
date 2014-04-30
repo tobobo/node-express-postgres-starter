@@ -14,7 +14,12 @@ module.exports = (app) ->
           delete req.session.authCallbackURL
           parsed = url.parse cbURL
           if !parsed.query then parsed.query = {}
-          parsed.query.user = JSON.stringify req.user
+          if req.user.toJSON?
+            user = req.user.toJSON()
+          else
+            user = req.user
+            
+          parsed.query.user = JSON.stringify user
           res.redirect url.format(parsed)
           
         res.end()
