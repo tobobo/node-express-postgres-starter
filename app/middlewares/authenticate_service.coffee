@@ -13,13 +13,14 @@ module.exports = (app) ->
           cbURL = req.session.authCallbackURL
           delete req.session.authCallbackURL
           parsed = url.parse cbURL
+          console.log 'parsed is', parsed
           if !parsed.query then parsed.query = {}
           if req.user.toJSON?
             user = req.user.toJSON()
           else
             user = req.user
-            
+
           parsed.query.user = JSON.stringify user
           res.redirect url.format(parsed)
-          
+
         res.end()

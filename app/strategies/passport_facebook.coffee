@@ -8,5 +8,6 @@ module.exports = (app) ->
     clientID: app.config.facebook_app_id
     clientSecret: app.config.facebook_app_secret
     callbackURL: '/auth/facebook/callback'
-  , (accessToken, refreshToken, profile, done) ->
+    passReqToCallback: true
+  , (req, accessToken, refreshToken, profile, done) ->
     done null, profile
