@@ -23,6 +23,6 @@ module.exports = (grunt) ->
 
   gruntAlias 'test:watch', 'Test and watch for changes', 'watch:test'
 
-  gruntAlias 'serve', 'Serve the site', 'express', 'dev'
+  gruntAlias 'server', 'Serve the site', 'express', 'dev'
 
   gruntAlias 'dev', 'Game time.', ['watch:dev']
