@@ -15,11 +15,11 @@ module.exports = (env) ->
     db:
       driver: "pg",
       user: "#{appName}_dev",
-      host: "localhost",  
+      host: "localhost",
       database: "#{appName}_dev"
 
-    facebook_app_id: process.env.LOUDER_FACEBOOK_APP_ID
-    facebook_app_secret: process.env.LOUDER_FACEBOOK_APP_SECRET
+    facebook_app_id: process.env.LOUDER_FACEBOOK_APP_ID or 'blahblah'
+    facebook_app_secret: process.env.LOUDER_FACEBOOK_APP_SECRET or 'blahblah'
 
   try
     filename = "./environments/#{env}"
