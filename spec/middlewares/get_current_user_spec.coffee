@@ -1,5 +1,6 @@
-config = require('../../config') 'test'
-app = require('../../app/app') config
+app =
+  config: require('../../config') 'test'
+require('../../app/initializers/database') app
 getCurrentUser = require('../../app/middlewares/get_current_user') app
 User = require('../../app/models/user') app
 _http = require 'express-mocks-http'

@@ -2,7 +2,7 @@ module.exports = (env) ->
   appName = 'postgres_starter'
   port = process.env.PORT or 8888
 
-  config = 
+  config =
     env: env
     appName: appName
     port: port
@@ -12,14 +12,14 @@ module.exports = (env) ->
     url: "http://localhost:#{port}"
     clients: ["http://localhost:4200", "http://louder.dev:4200"]
     cookieDomain: ''
-    db: 
+    db:
       driver: "pg",
       user: "#{appName}_dev",
-      host: "localhost",  
+      host: "localhost",
       database: "#{appName}_dev"
 
-    facebook_app_id: process.env.LOUDER_FACEBOOK_APP_ID
-    facebook_app_secret: process.env.LOUDER_FACEBOOK_APP_SECRET
+    facebook_app_id: process.env.LOUDER_FACEBOOK_APP_ID or 'blahblah'
+    facebook_app_secret: process.env.LOUDER_FACEBOOK_APP_SECRET or 'blahblah'
 
   try
     filename = "./environments/#{env}"

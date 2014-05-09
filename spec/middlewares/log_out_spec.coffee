@@ -1,6 +1,6 @@
-config = require('../../config') 'test'
-app = require('../../app/app') config
-User = require('../../app/models/user') app
+app =
+  config: require('../../config') 'test'
+require('../../app/initializers/database') app
 _http = require 'express-mocks-http'
 logOut = require('../../app/middlewares/log_out') app
 

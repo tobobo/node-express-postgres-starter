@@ -1,5 +1,6 @@
-config = require('../../config') 'test'
-app = require('../../app/app') config
+app =
+  config: require('../../config') 'test'
+require('../../app/initializers/database') app
 User = require('../../app/models/user') app
 _http = require 'express-mocks-http'
 passport = require 'passport'
