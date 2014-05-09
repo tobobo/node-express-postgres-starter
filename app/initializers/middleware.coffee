@@ -8,18 +8,14 @@ module.exports = (app) ->
   expressSession = require 'express-session'
   PgSession = require('connect-pg-simple')
     session: expressSession
+  isValidClient = require('../utils/is_valid_client') app
 
   app.use cookieParser()
   app.use bodyParser()
   app.use methodOverride()
 
   app.use (req, res, next) ->
-    originValid = false
-    for host in app.config.clients
-      if typeof host == 'string' then host = new RegExp(host)
-      originValid = host.test req.headers.origin
-      if originValid then break
-    if originValid
+    if isValidClient req.headers.origin
       res.header 'Access-Control-Allow-Origin', req.headers.origin
       res.header 'Access-Control-Allow-Credentials', true
       res.header 'Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS'
