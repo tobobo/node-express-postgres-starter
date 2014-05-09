@@ -2,6 +2,8 @@ path = require 'path'
 
 module.exports = (grunt) ->
   grunt.registerTask 'db:config', 'Write/delete database configuration for migrations', (env) ->
+    unless env?
+      env = 'dev'
     if env == 'delete'
       grunt.file.delete(grunt.config('dbConfigPath'))
     else
