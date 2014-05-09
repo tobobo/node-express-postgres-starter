@@ -12,7 +12,7 @@ module.exports = (grunt) ->
         grunt.log.error 'Can only create user for local database.'
         "exit 1"
       else
-        "createuser #{dbConfig.user} --no-superuser --createdb"
+        "createuser #{dbConfig.user} --no-superuser --no-createrole --no-replication --no-superuser --createdb"
 
   dropuser:
     cmd: (env) ->
