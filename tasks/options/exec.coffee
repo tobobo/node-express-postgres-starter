@@ -1,29 +1,60 @@
 moment = require 'moment'
 
 module.exports = (grunt) ->
-  createdb:
+
+  createuser:
     cmd: (env) ->
       unless env?
         env = 'dev'
       dbConfig = grunt.config('appConfig')(env).db
+      pgHbaPath = '/usr/local/var/postgres/pg_hba.conf'
+      if dbConfig.host != 'localhost'
+        grunt.log.error 'Can only create user for local database.'
+        "exit 1"
+      else
+        "
+          createuser #{dbConfig.user} --createdb && (
+            if [ ! -n \"$(cat #{pgHbaPath} | grep #{dbConfig.user} | tr -d ' ')\" ]; then
+              echo 'local all #{dbConfig.user} trust' >> #{pgHbaPath};
+            fi
+          )
+        "
+
+  dropuser:
+    cmd: (env) ->
+      unless env?
+        env = 'dev'
+      dbConfig = grunt.config('appConfig')(env).db
+      pgHbaPath = '/usr/local/var/postgres/pg_hba.conf'
+      if dbConfig.host != 'localhost'
+        grunt.log.error 'Can only drop user for local database.'
+        "exit 1"
+      else
+        "dropuser #{dbConfig.user}"
+
+  createdb:
+    cmd: (env) ->
+      dbConfig = grunt.config('appConfig')(env).db
+      unless env?
+        env = 'dev'
       "createdb #{dbConfig.database}
-        -O #{dbConfig.user} 
-        -h #{dbConfig.host} 
-        -U #{dbConfig.user} 
+        -O #{dbConfig.user}
+        -h #{dbConfig.host}
+        -U #{dbConfig.user}
       || echo 'Database #{dbConfig.database} already exists.'"
 
   dropdb:
     cmd: (env) ->
+      dbConfig = grunt.config('appConfig')(env).db
       unless env?
         env = 'dev'
       if env == 'prod'
         grunt.log.error 'Cannot drop production database.'
         "exit 1"
       else
-        dbConfig = grunt.config('appConfig')(env).db
-        "dropdb #{dbConfig.database} 
-          -h #{dbConfig.host} 
-          -U #{dbConfig.user} 
+        "dropdb #{dbConfig.database}
+          -h #{dbConfig.host}
+          -U #{dbConfig.user}
         || echo 'Database #{dbConfig.database} does not exist.'"
 
   migrate:

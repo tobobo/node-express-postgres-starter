@@ -11,11 +11,23 @@ module.exports = (grunt) ->
 
   gruntAlias 'db:drop', 'Drop database', 'exec:dropdb'
 
+  gruntAlias 'db:dropuser', 'Delete user', 'exec:dropuser'
+
+  gruntAlias 'db:dropall', 'Drop database and delete user', ['db:drop', 'db:dropuser']
+
   gruntAlias 'db:create', 'Create database', 'exec:createdb'
+
+  gruntAlias 'db:createuser', 'Create user', 'exec:createuser'
+
+  gruntAlias 'db:createall', 'Create user and database', ['db:createuser', 'db:create']
 
   gruntAlias 'db:migrate', 'Migrate Database', ['db:config', 'exec:migrate', 'db:config:delete']
 
+  gruntAlias 'db:init', 'Init database', ['db:createuser', 'db:create', 'db:migrate']
+
   gruntAlias 'db:reset', 'Reset database', ['db:drop', 'db:create', 'db:migrate']
+
+  gruntAlias 'db:resetall', 'Reset database and user', ['db:dropall', 'db:createall', 'db:migrate']
 
   gruntAlias 'test', 'Test the thing', 'jasmine_node', 'all'
 
