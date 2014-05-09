@@ -1,6 +1,6 @@
 module.exports = (grunt) ->
   loadGruntConfig = require('./tasks/utils/load_config') grunt
-  loadGruntConfig './tasks/options/', 
+  loadGruntConfig './tasks/options/',
     appConfig: require('./config')
     dbConfigPath: 'tmp/database.json'
 
@@ -23,6 +23,6 @@ module.exports = (grunt) ->
 
   gruntAlias 'test:watch', 'Test and watch for changes', 'watch:test'
 
-  gruntAlias 'serve', 'Serve the site', 'express', 'dev'
+  gruntAlias 'server', 'Serve the site', 'express', 'dev'
 
   gruntAlias 'dev', 'Game time.', ['watch:dev']

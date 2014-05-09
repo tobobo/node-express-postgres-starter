@@ -7,7 +7,7 @@ describe 'sessions controller', ->
 
     it "should not log a user in without credentials", (done) ->
       request(app)
-      .post('/sessions')
+      .post('/auth')
       .expect(400, done)
 
     email = 'someothing@wut.com'
@@ -21,7 +21,7 @@ describe 'sessions controller', ->
         password: password
       .save().then (createdUser) ->
         agent
-        .post('/sessions')
+        .post('/auth')
         .send
           session:
             email: createdUser.get('email')
@@ -32,14 +32,13 @@ describe 'sessions controller', ->
 
     it "should get the current user", (done) ->
       agent
-      .get('/sessions')
+      .get('/auth')
       .expect(new RegExp("#{email}"), done)
 
     it "should log a user out", (done) ->
-      agent.delete('/sessions').expect(/logged out/, done)
+      agent.delete('/auth').expect(/logged out/, done)
 
     it "should not have a user anymore", (done) ->
       agent
-      .get('/sessions')
+      .get('/auth')
       .expect(/no current user/i, done)
-

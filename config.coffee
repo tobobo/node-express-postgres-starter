@@ -10,7 +10,7 @@ module.exports = (env) ->
     sessionKey: "#{appName}_session"
     sessionSecret: process.env["#{appName.toUpperCase()}_SESSION_SECRET"] or 'keyboard cat'
     url: "http://localhost:#{port}"
-    clients: ["http://localhost:4200"]
+    clients: ["http://localhost:4200", "http://louder.dev:4200"]
     cookieDomain: ''
     db: 
       driver: "pg",
@@ -18,6 +18,8 @@ module.exports = (env) ->
       host: "localhost",  
       database: "#{appName}_dev"
 
+    facebook_app_id: process.env.LOUDER_FACEBOOK_APP_ID
+    facebook_app_secret: process.env.LOUDER_FACEBOOK_APP_SECRET
 
   try
     filename = "./environments/#{env}"
