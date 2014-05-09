@@ -6,4 +6,4 @@ before_script: grunt db:init:test
 after_script: grunt db:dropall:test
 cache:
   directories:
-  - node_modules
+    - node_modules
