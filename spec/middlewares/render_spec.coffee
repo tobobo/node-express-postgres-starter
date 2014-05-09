@@ -1,5 +1,6 @@
-config = require('../../config') 'test'
-app = require('../../app/app') config
+app =
+  config: require('../../config') 'test'
+require('../../app/initializers/database') app
 render = require('../../app/middlewares/render') app
 User = require('../../app/models/user') app
 
@@ -9,7 +10,7 @@ describe 'render middleware', ->
     _http = require 'express-mocks-http'
     req = _http.createRequest()
     res = _http.createResponse()
-    res.content = 
+    res.content =
       what: 'hey'
       now: 'there'
 
@@ -117,4 +118,3 @@ describe 'render middleware', ->
       done()
 
     render(key) req, res
-

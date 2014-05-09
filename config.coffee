@@ -2,7 +2,7 @@ module.exports = (env) ->
   appName = 'postgres_starter'
   port = process.env.PORT or 8888
 
-  config = 
+  config =
     env: env
     appName: appName
     port: port
@@ -12,7 +12,7 @@ module.exports = (env) ->
     url: "http://localhost:#{port}"
     clients: ["http://localhost:4200", "http://louder.dev:4200"]
     cookieDomain: ''
-    db: 
+    db:
       driver: "pg",
       user: "#{appName}_dev",
       host: "localhost",  
