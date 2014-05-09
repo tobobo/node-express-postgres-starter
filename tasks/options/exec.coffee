@@ -12,7 +12,7 @@ module.exports = (grunt) ->
         grunt.log.error 'Can only create user for local database.'
         "exit 1"
       else
-        "createuser #{dbConfig.user} --createdb"
+        "createuser #{dbConfig.user} --no-superuser --createdb"
 
   dropuser:
     cmd: (env) ->
@@ -34,8 +34,7 @@ module.exports = (grunt) ->
       "createdb #{dbConfig.database}
         -O #{dbConfig.user}
         -h #{dbConfig.host}
-        -U #{dbConfig.user}
-      || echo 'Database #{dbConfig.database} already exists.'"
+        -U #{dbConfig.user}"
 
   dropdb:
     cmd: (env) ->
@@ -48,8 +47,7 @@ module.exports = (grunt) ->
       else
         "dropdb #{dbConfig.database}
           -h #{dbConfig.host}
-          -U #{dbConfig.user}
-        || echo 'Database #{dbConfig.database} does not exist.'"
+          -U #{dbConfig.user}"
 
   migrate:
     cmd: (env, cmd) ->
