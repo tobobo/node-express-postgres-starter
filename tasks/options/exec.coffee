@@ -12,13 +12,7 @@ module.exports = (grunt) ->
         grunt.log.error 'Can only create user for local database.'
         "exit 1"
       else
-        "
-          createuser #{dbConfig.user} --createdb && (
-            if [ ! -n \"$(cat #{pgHbaPath} | grep #{dbConfig.user} | tr -d ' ')\" ]; then
-              echo 'local all #{dbConfig.user} trust' >> #{pgHbaPath};
-            fi
-          )
-        "
+        "createuser #{dbConfig.user} --createdb"
 
   dropuser:
     cmd: (env) ->

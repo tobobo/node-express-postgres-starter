@@ -16,7 +16,7 @@
     "express-mocks-http": "0.0.11",
     "grunt-jasmine-node": "~0.2.1",
     "grunt-contrib-watch": "~0.6.1",
-    "supertest": "~0.11.0",
+    "supertest": "~0.12.1",
     "load-grunt-tasks": "~0.4.0",
     "glob": "~3.2.9",
     "grunt-express-server": "~0.4.17"
