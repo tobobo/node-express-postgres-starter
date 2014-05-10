@@ -19,7 +19,6 @@ module.exports = (grunt) ->
       unless env?
         env = 'dev'
       dbConfig = grunt.config('appConfig')(env).db
-      pgHbaPath = '/usr/local/var/postgres/pg_hba.conf'
       if dbConfig.host != 'localhost'
         grunt.log.error 'Can only drop user for local database.'
         "exit 1"
