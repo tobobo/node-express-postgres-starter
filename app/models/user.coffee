@@ -2,7 +2,9 @@ RSVP = require 'rsvp'
 bcrypt = require 'bcrypt'
 
 module.exports = (app) ->
-  app.db.Model.extend
+  Model = require('./model') app
+  
+  Model.extend
     tableName: 'users'
 
     hashPassword: ->
@@ -30,4 +32,3 @@ module.exports = (app) ->
 
       @on 'saving', (model, attrs, options) ->
         model.hashPassword()
-
