@@ -3,7 +3,7 @@ bcrypt = require 'bcrypt'
 
 module.exports = (app) ->
   Model = require('./model') app
-  
+
   Model.extend
     tableName: 'users'
 
@@ -28,7 +28,8 @@ module.exports = (app) ->
           else resolve isMatch
 
     constructor: ->
-      app.db.Model.apply(@, arguments)
 
       @on 'saving', (model, attrs, options) ->
         model.hashPassword()
+        
+      Model.apply(@, arguments)
